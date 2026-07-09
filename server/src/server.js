@@ -11,6 +11,7 @@ const app = express();
 const PORT = 3000;
 
 //App use  Files
+app.use(express.json());
 app.use(IndexRouter);
 app.use(TodoRouter);
 
