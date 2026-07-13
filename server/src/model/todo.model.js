@@ -5,6 +5,7 @@ const todoSchema = mongoose.Schema({
     type: String,
     minLength: [5, "That title must me minmum of 5 Charaters ({VALUE})"],
     trim: true,
+     required: true,
   },
   description: {
     type: String,
