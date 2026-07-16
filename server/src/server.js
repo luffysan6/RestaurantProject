@@ -7,13 +7,14 @@ import dbConnect from "./config/db.js";
 import TodoRouter from "./routes/todo.route.js";
 import UserRouter from "./routes/user.route.js";
 import AuthRouter from "./routes/auth.route.js";
-
+import cookieParser from 'cookie-parser'
 // Server Variables
 const app = express();
 const PORT = 3000;
 
 //App use  Files
 app.use(express.json());
+app.use(cookieParser());
 app.use(IndexRouter);
 app.use("/auth", AuthRouter);
 app.use("/user", UserRouter);

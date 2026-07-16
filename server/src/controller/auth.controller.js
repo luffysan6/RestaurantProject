@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import User from "../model/user.model.js";
-
+import jwt from "jsonwebtoken";
+import { hashPassword } from "../libs/Hashing.js";
+import { GenerateToken } from "../libs/token.js";
 export const LoginController = async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -41,10 +43,25 @@ export const LoginController = async (req, res) => {
       });
     }
 
-    console.log(userData);
+    const token = await GenerateToken({
+      id: userData._id,
+      role: userData.role,
+      name: userData.name,
+    });
+
+    // console.log(Jwtcookie);
+
+    // console.log(userData);
+
+    // tokens impletement
+
+    // cookies
+
+    res.cookie("jwt", token);
 
     return res.json({
-      data: req.body,
+      success: true,
+      data: userData,
     });
   } catch (error) {
     console.log({
@@ -53,6 +70,89 @@ export const LoginController = async (req, res) => {
     });
 
     return res.json({
+      success: false,
+      message: "Error on Server",
+    });
+  }
+};
+
+export const RegisterController = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (name == "" || name.length == 0) {
+      return res.json({
+        success: "false",
+        message: "User is Required to have a name !",
+      });
+    }
+    if (email == "" || email.length == 0) {
+      return res.json({
+        success: "false",
+        message: "User is Required to have a Email !",
+      });
+    }
+
+    if (!email.includes("@")) {
+      return res.json({
+        success: "false",
+        message: "Kindly Provide a Valid Email !",
+      });
+    }
+
+    if (password == "" || password.length == 0) {
+      return res.json({
+        success: "false",
+        message: "User is Required to have a Password !",
+      });
+    }
+
+    const hashPass = await hashPassword(password);
+
+    const result = await User.insertOne({
+      name: name,
+      email: email,
+      password: hashPass,
+    });
+
+    const token = await GenerateToken({
+      id: userData._id,
+      role: userData.role,
+      name: userData.name,
+    });
+
+    res.cookie("jwt", token);
+
+    res.json(result);
+  } catch (error) {
+    console.log({
+      error: "you Error ",
+      errorinfo: error,
+    });
+
+    res.json({
+      success: false,
+      message: "Error on Server",
+    });
+  }
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    const token = req.cookies;
+
+    console.log(token);
+
+    res.json({
+      token: token,
+    });
+  } catch (error) {
+    console.log({
+      error: "you Error ",
+      errorinfo: error,
+    });
+
+    res.json({
       success: false,
       message: "Error on Server",
     });
