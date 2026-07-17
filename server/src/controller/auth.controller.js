@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../model/user.model.js";
 import jwt from "jsonwebtoken";
 import { hashPassword } from "../libs/Hashing.js";
-import { GenerateToken } from "../libs/token.js";
+import { GenerateToken, verfiyToken } from "../libs/token.js";
 export const LoginController = async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -46,10 +46,9 @@ export const LoginController = async (req, res) => {
     const token = await GenerateToken({
       id: userData._id,
       role: userData.role,
-      name: userData.name,
     });
 
-    // console.log(Jwtcookie);
+    console.log(token);
 
     // console.log(userData);
 
@@ -116,14 +115,16 @@ export const RegisterController = async (req, res) => {
     });
 
     const token = await GenerateToken({
-      id: userData._id,
-      role: userData.role,
-      name: userData.name,
+      id: result._id,
+      role: result.role,
     });
 
     res.cookie("jwt", token);
 
-    res.json(result);
+    res.json({
+      success: true,
+      message: "User Created Successfully",
+    });
   } catch (error) {
     console.log({
       error: "you Error ",
@@ -142,8 +143,19 @@ export const checkAuth = async (req, res) => {
     const token = req.cookies;
 
     console.log(token);
+    console.log(typeof token);
+    if (Object.keys(token).length === 0) {
+      return res.json({
+        success: false,
+        message: "Token Not Found",
+      });
+    }
 
-    res.json({
+    console.log(token);
+
+    console.log(await verfiyToken(token.jwt));
+
+    return res.json({
       token: token,
     });
   } catch (error) {
