@@ -5,9 +5,10 @@ import Header from "../Component/Header";
 import demo from "../store/demo";
 
 const Home = () => {
-  const { name, age, updateName } = demo();
+  const { name, age, updateName, callApi } = demo();
   let [newName, setNewName] = useState("");
   console.log(demo());
+
   return (
     <>
       <Header />
@@ -23,20 +24,23 @@ const Home = () => {
         onChange={(e) => setNewName(e.target.value)}
       />
 
-      <button
+      {/* <button
         onClick={() => {
           updateName(newName);
-          //   console.log("Hello");
+          //   
         }}
       >
         Change Name
-      </button>
-      {/* <Button
-        onclick={() => {
-          console.log("Hello");
-        }}
+      </button> */}
+      <Button
         title="Update Name"
-      /> */}
+        onclick={() => {
+          updateName(newName);
+        }}
+      />
+
+      <br />
+      <Button title="Get Value" onclick={() => callApi()} />
       {/* <Button title={"Login"} /> */}
       <Footer />
     </>

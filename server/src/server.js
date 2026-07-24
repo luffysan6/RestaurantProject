@@ -9,11 +9,17 @@ import UserRouter from "./routes/user.route.js";
 import AuthRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
+import cors from "cors";
 // Server Variables
 const app = express();
 const PORT = 3000;
 
 //App use  Files
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(IndexRouter);
