@@ -7,7 +7,7 @@ import {
 
 const router = Router();
 
-router.get("/login", LoginController);
+router.post("/login", LoginController);
 router.post("/register", RegisterController);
 router.get("/check", checkAuth);
 

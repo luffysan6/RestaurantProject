@@ -14,7 +14,7 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     console.log("Sign up data:", formData);
     const result = await SignUpApi(formData);
 

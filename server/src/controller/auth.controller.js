@@ -9,13 +9,13 @@ export const LoginController = async (req, res) => {
 
     // console.log({ email, password });
     if (!email) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "email is required",
       });
     }
     if (!password) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "password is required",
       });
@@ -26,7 +26,7 @@ export const LoginController = async (req, res) => {
     const userData = await User.findOne({ email: email });
 
     if (!userData) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "User with This Email Doesn't Exist ",
       });
@@ -56,7 +56,12 @@ export const LoginController = async (req, res) => {
 
     // cookies
 
-    res.cookie("jwt", token);
+    res.cookie("jwt", token, {
+      expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1), //second min hour days year
+      secure: false, // set to true - samesite none only works with https
+      httpOnly: true, // backend only
+      sameSite: "none",
+    });
 
     return res.json({
       success: true,
@@ -119,7 +124,12 @@ export const RegisterController = async (req, res) => {
       role: result.role,
     });
 
-    res.cookie("jwt", token);
+    res.cookie("jwt", token, {
+      expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1), //second min hour days year
+      secure: false, // set to true - samesite none only works with https
+      httpOnly: true, // backend only
+      sameSite: "none",
+    });
 
     res.json({
       success: true,
