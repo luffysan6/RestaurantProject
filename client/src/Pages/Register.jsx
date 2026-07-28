@@ -1,7 +1,9 @@
 import { useState } from "react";
 import AuthStore from "../store/AuthStore";
+import { Link, useNavigate } from "react-router";
 export default function Register() {
   let { SignUpApi } = AuthStore();
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,7 +16,7 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     console.log("Sign up data:", formData);
     const result = await SignUpApi(formData);
 
@@ -109,9 +111,12 @@ export default function Register() {
 
         <p className="text-sm text-gray-500 text-center mt-6">
           Already have an account?{" "}
-          <a href="#" className="text-indigo-600 font-medium hover:underline">
+          <Link
+            to={"/signin"}
+            className="text-indigo-600 font-medium hover:underline"
+          >
             Log in
-          </a>
+          </Link>
         </p>
       </div>
     </div>

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import AuthStore from "../store/AuthStore";
+import { Link, useNavigate } from "react-router";
 
 export default function Login() {
   let { SignInApi } = AuthStore();
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,6 +26,8 @@ export default function Login() {
       const result = await SignInApi(formData);
       if (!result) {
         setError("Invalid email or password.");
+      } else {
+        navigate("/dashboard");
       }
       // on success, your AuthStore/router should handle redirect
     } catch (err) {
@@ -102,9 +106,12 @@ export default function Login() {
 
           <p className="text-sm text-gray-500 text-center mt-6">
             Don't have an account?{" "}
-            <a href="#" className="text-indigo-600 font-medium hover:underline">
+            <Link
+              to={"/signup"}
+              className="text-indigo-600 font-medium hover:underline"
+            >
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
       </div>
