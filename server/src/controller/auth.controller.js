@@ -25,7 +25,7 @@ export const LoginController = async (req, res) => {
 
     const userData = await User.findOne({ email: email });
 
-    if (!userData) {  
+    if (!userData) {
       return res.status(404).json({
         success: false,
         message: "User with This Email Doesn't Exist ",
@@ -60,7 +60,7 @@ export const LoginController = async (req, res) => {
       expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1), //second min hour days year
       secure: false, // set to true - samesite none only works with https
       httpOnly: true, // backend only
-      sameSite: "none",
+      sameSite: "lax",
     });
 
     return res.json({
@@ -128,7 +128,7 @@ export const RegisterController = async (req, res) => {
       expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1), //second min hour days year
       secure: false, // set to true - samesite none only works with https
       httpOnly: true, // backend only
-      sameSite: "none",
+      sameSite: "lax",
     });
 
     res.json({
@@ -165,8 +165,11 @@ export const checkAuth = async (req, res) => {
 
     console.log(await verfiyToken(token.jwt));
 
+   let decodedToken = await verfiyToken(token.jwt);
+
     return res.json({
-      token: token,
+      success: true,
+      token: decodedToken,
     });
   } catch (error) {
     console.log({

@@ -5,15 +5,13 @@ import UserDashboard from "../Pages/User/Dashboard";
 
 const Dasboard = () => {
   const { isAdmin } = Auth();
-
+  console.log(isAdmin);
   if (isAdmin == "admin") {
     return <AdminDashboard />;
-  } 
-  else if (isAdmin == "user") {
+  } else if (isAdmin == "user") {
     return <UserDashboard />;
-  }
-  else{
-    return (<h1>Login Failed</h1>)
+  } else {
+    return <h1>Login Failed</h1>;
   }
 };
 
