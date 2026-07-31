@@ -4,6 +4,7 @@ import express from "express"; // type module  export
 
 import IndexRouter from "./routes/index.route.js";
 import dbConnect from "./config/db.js";
+import FoodRouter from './routes/food.route.js'
 import TodoRouter from "./routes/todo.route.js";
 import UserRouter from "./routes/user.route.js";
 import AuthRouter from "./routes/auth.route.js";
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(IndexRouter);
 app.use("/auth", AuthRouter);
 app.use("/user", UserRouter);
+app.use("/food", FoodRouter);
 
 app.listen(PORT, async () => {
   await dbConnect();
