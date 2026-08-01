@@ -26,6 +26,9 @@ const foodSchema = new mongoose.Schema({
     minLength: 100,
     required: true,
   },
+
+  // image ko store karne ke liye cloud storage
+  // cloudinary - asset magment cloud option   
   images: {
     type: [String],
   },
