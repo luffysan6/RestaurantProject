@@ -18,3 +18,5 @@ const fileUploader = async (filePath, folderPath) => {
     console.log("Found Error", err);
   }
 };
+
+export default fileUploader;
