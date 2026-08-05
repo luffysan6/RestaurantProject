@@ -5,6 +5,6 @@ import multer from "../libs/multer.cjs";
 const router = Router();
 
 router.post("/create", multer.array("foodImage"), CreateFood);
-router.post("/updateFoodDate/:id", updateFoodData);
+router.post("/updateFoodData/:id", updateFoodData);
 
 export default router;
