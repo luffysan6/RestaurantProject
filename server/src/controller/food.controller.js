@@ -81,11 +81,10 @@ export const updateFoodData = async (req, res) => {
     console.log(updatedFoodData);
 
     res.status(202).json({
-      success:true,
-      message:"Data Updated Successfully",
-      updatedFoodData
-    })
-
+      success: true,
+      message: "Data Updated Successfully",
+      updatedFoodData,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -95,19 +94,73 @@ export const updateFoodData = async (req, res) => {
   }
 };
 
+export const readAllData = async (req, res) => {
+  try {
+    // const Allfood = await Food.find({}, "-images -description"); // remove Some Field while Fetching Data
+    const Allfood = await Food.find({});
 
-export const updateImage = (req,res) =>{
-  const {id} = req.params;
-  const file = req.file;
+    if (!Allfood) {
+      return res.status(404).json({
+        success: false,
+        message: "No Food Data Found",
+      });
+    }
 
-    food = find();
+    return res.status(200).json({
+      success: true,
+      message: "Food Data Fetched Successfully",
+      data: Allfood,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
 
+export const GetOne = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-    uploadedfile 
+    let foodData = await Food.findOne({ _id: id });
 
-    food.images.push(upoaded file);
+    if (!foodData) {
+      return res.status(404).json({
+        success: false,
+        message: "Data Not Found",
+      });
+    }
 
-    food.update({},{
-      images:newimage
-    })
-}
+    return res.status(200).json({
+      success: true,
+      message: "Data Fetched Successfully",
+      data: foodData,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
+export const DeleteOne = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    let result = await Food.findOneAndDelete({ _id: id },{
+      includeResultMetadata:true
+    });
+
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
