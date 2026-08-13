@@ -26,7 +26,7 @@ const Auth = create((set, get) => ({
       console.log(data);
       set({ userData: data.token.id });
       set({ isAdmin: data.token.role });
-      window.location.href = "/dashboard";
+      // window.location.href = "/dashboard";
     } catch (err) {
       console.log("error", err);
     }

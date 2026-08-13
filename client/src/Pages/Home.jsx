@@ -1,23 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../Component/Button";
 import Footer from "../Component/Footer";
 import Header from "../Component/Header";
 import demo from "../store/demo";
-import Auth from "../store/AuthStore";
+// import Auth from "../store/AuthStore";
 
 const Home = () => {
   const { name, age, updateName, callApi } = demo();
-  const { checkAuthApi } = Auth();
   let [newName, setNewName] = useState("");
   console.log(demo());
 
-  async function checkAdminStatus() {
-    await checkAuthApi();
-  }
-
-  useEffect(() => {
-    checkAdminStatus();
-  }, []);
+ 
 
   return (
     <>
