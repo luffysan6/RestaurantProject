@@ -110,6 +110,14 @@ export const RegisterController = async (req, res) => {
         message: "User is Required to have a Password !",
       });
     }
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(409).json({
+        message: "User with this Email Already Exist",
+        success: false,
+      });
+    }
 
     const hashPass = await hashPassword(password);
 
@@ -165,7 +173,7 @@ export const checkAuth = async (req, res) => {
 
     console.log(await verfiyToken(token.jwt));
 
-   let decodedToken = await verfiyToken(token.jwt);
+    let decodedToken = await verfiyToken(token.jwt);
 
     return res.json({
       success: true,

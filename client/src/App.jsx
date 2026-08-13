@@ -5,12 +5,9 @@ import { useEffect } from "react";
 const App = () => {
   const { checkAuthApi } = AuthStore();
 
-  const getAuthCheck = async () => {
-    checkAuthApi();
-  };
   useEffect(() => {
-    getAuthCheck();
-  }, []);
+    checkAuthApi();
+  }, [checkAuthApi]);
   return <AppRouter />;
 };
 
