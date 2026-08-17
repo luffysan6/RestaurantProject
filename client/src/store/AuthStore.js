@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axiosClient from "../libs/axios";
+import axios from "axios";
 
 const Auth = create((set) => ({
   userData: null,
@@ -32,6 +33,23 @@ const Auth = create((set) => ({
       // }
     } catch (err) {
       console.log("error", err);
+    }
+  },
+  logoutApi: async () => {
+    try {
+      let { data } = await axiosClient.get("/auth/logout");
+
+      console.log(data);
+
+      if (data.success) {
+        alert("Logout Successfully");
+        window.location.replace("/");
+      }
+    } catch (error) {
+      console.log({
+        error: "you Error ",
+        errorinfo: error,
+      });
     }
   },
 }));

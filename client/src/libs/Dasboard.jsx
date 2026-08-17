@@ -1,4 +1,3 @@
-import React from "react";
 import Auth from "../store/AuthStore";
 import AdminDashboard from "../Pages/Admin/Dashboard";
 import UserDashboard from "../Pages/User/Dashboard";

@@ -156,6 +156,27 @@ export const RegisterController = async (req, res) => {
   }
 };
 
+export const logoutController = async (req, res) => {
+  try {
+    res.clearCookie("jwt");
+
+    res.status(200).json({
+      success: true,
+      message: "Logout Successfuly",
+    });
+  } catch (error) {
+    console.log({
+      error: "you Error ",
+      errorinfo: error,
+    });
+
+    res.json({
+      success: false,
+      message: "Error on Server",
+    });
+  }
+};
+
 export const checkAuth = async (req, res) => {
   try {
     const token = req.cookies;

@@ -1,9 +1,11 @@
-
+import Explore from "./Explore";
 
 const Dashboard = () => {
   return (
-    <div>User Dashboard</div>
-  )
-}
+    <div>
+      <Explore />
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

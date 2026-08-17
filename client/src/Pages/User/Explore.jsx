@@ -9,7 +9,7 @@ const Explore = () => {
     getAllFood();
   }, []);
   return (
-    <div>
+    <div className="flex flex-row gap-2 my-5 justify-center px-3">
       {foodData.map((obj) => (
         <FoodCard food={obj} />
       ))}

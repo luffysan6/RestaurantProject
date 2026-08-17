@@ -9,6 +9,7 @@ import Footer from "./Component/Footer.jsx";
 import Header from "./Component/Header";
 import Explore from "./Pages/User/Explore.jsx";
 import GuestRoute from "./Component/GuestRoute.jsx";
+import RoleRouter from "./Component/RoleRouter.jsx";
 const AppRouter = () => {
   return (
     <>
@@ -20,7 +21,7 @@ const AppRouter = () => {
             <Route path="/signin" element={<Login />} />
           </Route>
 
-          <Route path="/explore" element={<Explore />} />
+          {/* <Route path="/explore" element={<Explore />} /> */}
           <Route element={<Protector />}>
             <Route
               path="/dashboard"
@@ -32,6 +33,18 @@ const AppRouter = () => {
                 </>
               }
             />
+            <Route path="/admin" element={<RoleRouter />}>
+              <Route
+                path="explore"
+                element={
+                  <>
+                    <Header />
+                    <h1>Explore Menus in Admin</h1>
+                    <Footer />
+                  </>
+                }
+              />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

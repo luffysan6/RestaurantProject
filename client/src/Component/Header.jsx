@@ -1,55 +1,111 @@
 import { PizzaIcon } from "lucide-react";
 import { NavLink } from "react-router";
+import Auth from "../store/AuthStore";
 
 export default function Header() {
-  return (
-    <header className="border-b bg-white">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <NavLink
-          to="/"
-          className="text-2xl font-bold text-orange-500 inline-flex items-center gap-1"
-        >
-          <PizzaIcon /> Zwiggy
-        </NavLink>
+  const { logoutApi, isAdmin } = Auth();
 
-        {/* Navigation */}
-        <nav className="flex items-center gap-6">
+  if (isAdmin == "admin") {
+    return (
+      <header className="border-b bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          {/* Logo */}
           <NavLink
             to="/"
-            className={({ isActive }) =>
-              `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
-            }
+            className="text-2xl font-bold text-orange-500 inline-flex items-center gap-1"
           >
-            Home
+            <PizzaIcon /> Zwiggy
           </NavLink>
 
+          {/* Navigation */}
+          <nav className="flex items-center gap-6">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
+              }
+            >
+              Orders
+            </NavLink>
+
+            <NavLink
+              to="/admin/explore"
+              className={({ isActive }) =>
+                `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
+              }
+            >
+              See All Menu
+            </NavLink>
+
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
+              }
+            >
+              Create Menu
+            </NavLink>
+
+            <p
+              onClick={() => logoutApi()}
+              className="rounded-lg bg-orange-500 px-4 py-2 font-medium text-white hover:bg-orange-600 cursor-pointer"
+            >
+              Logout
+            </p>
+          </nav>
+        </div>
+      </header>
+    );
+  } else {
+    return (
+      <header className="border-b bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          {/* Logo */}
           <NavLink
-            to="/menu"
-            className={({ isActive }) =>
-              `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
-            }
+            to="/"
+            className="text-2xl font-bold text-orange-500 inline-flex items-center gap-1"
           >
-            Menu
+            <PizzaIcon /> Zwiggy
           </NavLink>
 
-          <NavLink
-            to="/cart"
-            className={({ isActive }) =>
-              `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
-            }
-          >
-            Cart
-          </NavLink>
+          {/* Navigation */}
+          <nav className="flex items-center gap-6">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
+              }
+            >
+              Home
+            </NavLink>
 
-          {/* <NavLink
-            to="/login"
-            className="rounded-lg bg-orange-500 px-4 py-2 font-medium text-white hover:bg-orange-600"
-          >
-            Login
-          </NavLink> */}
-        </nav>
-      </div>
-    </header>
-  );
+            <NavLink
+              to="/menu"
+              className={({ isActive }) =>
+                `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
+              }
+            >
+              Menu
+            </NavLink>
+
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
+              }
+            >
+              Cart
+            </NavLink>
+
+            <p
+              onClick={() => logoutApi()}
+              className="rounded-lg bg-orange-500 px-4 py-2 font-medium text-white hover:bg-orange-600 cursor-pointer"
+            >
+              Logout
+            </p>
+          </nav>
+        </div>
+      </header>
+    );
+  }
 }
