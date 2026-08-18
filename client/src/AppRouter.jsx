@@ -8,6 +8,7 @@ import Protector from "./Component/Protector.jsx";
 import Footer from "./Component/Footer.jsx";
 import Header from "./Component/Header";
 import Explore from "./Pages/User/Explore.jsx";
+import ExploreAdmin from "./Pages/Admin/Explore.jsx";
 import GuestRoute from "./Component/GuestRoute.jsx";
 import RoleRouter from "./Component/RoleRouter.jsx";
 const AppRouter = () => {
@@ -39,7 +40,7 @@ const AppRouter = () => {
                 element={
                   <>
                     <Header />
-                    <h1>Explore Menus in Admin</h1>
+                    <ExploreAdmin />
                     <Footer />
                   </>
                 }
