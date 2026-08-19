@@ -3,7 +3,7 @@ import FoodStore from "../../store/FoodStore";
 import { Edit2Icon, Trash } from "lucide-react";
 
 const Explore = () => {
-  const { getAllFood, foodData } = FoodStore();
+  const { getAllFood, foodData, deleteFoodMenu } = FoodStore();
   console.log(foodData);
 
   useEffect(() => {
@@ -51,15 +51,16 @@ const Explore = () => {
               <td className="px-6 py-4">{obj.category}</td>
               <td className="px-6 py-4">{obj.isavaiable ? "Yes" : "No"}</td>
               <td className="px-6 py-4">
-                <button
+                <Trash
                   data-food-id={obj._id}
                   onClick={(e) => {
-                    console.log(e.target);
+                    deleteFoodMenu(e.currentTarget.dataset.foodId).then(
+                      getAllFood(),
+                    );
+                    // console.log(e.currentTarget.dataset.foodId);
                   }}
-                >
-                 
-                  <Trash color="#fc1c03" />
-                </button>
+                  color="#fc1c03"
+                />
               </td>
               <td className="px-6 py-4">
                 <Edit2Icon color="#037ffc" />

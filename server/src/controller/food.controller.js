@@ -151,11 +151,17 @@ export const DeleteOne = async (req, res) => {
   try {
     const { id } = req.params;
 
-    let result = await Food.findOneAndDelete({ _id: id },{
-      includeResultMetadata:true
-    });
+    let result = await Food.findOneAndDelete(
+      { _id: id },
+      {
+        includeResultMetadata: true,
+      },
+    );
 
-    res.send(result);
+    res.status(200).json({
+      success: true,
+      message: "Menu Item Delete Successfully",
+    });
   } catch (err) {
     console.log(err);
     return res.status(400).json({

@@ -11,6 +11,7 @@ import Explore from "./Pages/User/Explore.jsx";
 import ExploreAdmin from "./Pages/Admin/Explore.jsx";
 import GuestRoute from "./Component/GuestRoute.jsx";
 import RoleRouter from "./Component/RoleRouter.jsx";
+import CreateMenu from "./Pages/Admin/CreateMenu.jsx";
 const AppRouter = () => {
   return (
     <>
@@ -41,6 +42,16 @@ const AppRouter = () => {
                   <>
                     <Header />
                     <ExploreAdmin />
+                    <Footer />
+                  </>
+                }
+              />
+              <Route
+                path="create-menu"
+                element={
+                  <>
+                    <Header />
+                    <CreateMenu />
                     <Footer />
                   </>
                 }

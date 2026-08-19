@@ -10,6 +10,24 @@ const FoodStore = create((set) => ({
 
     set({ foodData: data.data });
   },
+  deleteFoodMenu: async (id) => {
+    try {
+      const confirm = window.confirm("Do you want to Delete this Menu item ?");
+
+      if(confirm){
+      const { data } = await axios.delete(`/food/deleteOne/${id}`);
+
+      console.log(data);
+
+      if (data.success) {
+        alert(data.message);
+      }
+      }
+     
+    } catch (error) {
+      console.error("Error :", error);
+    }
+  },
 }));
 
 export default FoodStore;
