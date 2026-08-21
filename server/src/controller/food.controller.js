@@ -43,8 +43,10 @@ export const CreateFood = async (req, res) => {
     res.status(201).json({
       success: true,
       newFoodItem: newFood,
+      message: "Food Item Created Successfully",
     });
   } catch (error) {
+    console.log("Error in Create FOod", error.message);
     return res.status(500).json({
       success: false,
       message: "Error at Server",

@@ -1,15 +1,55 @@
 import { useState } from "react";
+import FoodStore from "../../store/FoodStore";
 
 const CreateMenu = () => {
   const [form, setform] = useState({});
+  const [images, setImage] = useState([]);
+  const [previews, setpreview] = useState([]);
+  const [submitting, setsubmitting] = useState(false);
+  const { createFoodMenu } = FoodStore();
+  const handleChange = (e) => {
+    setform({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const handleChange = () => {};
+  const addFiles = (filesArray) => {
+    console.log(filesArray);
+
+    const previewArray = [];
+
+    for (let image of filesArray) {
+      previewArray.push(URL.createObjectURL(image));
+    }
+    setpreview(previewArray);
+
+    setImage(filesArray);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setsubmitting(true);
+    let formData = new FormData();
+
+    Object.entries(form).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    formData.append("isavaiable", true);
+    formData.append("foodImage", images);
+    console.log(formData);
+
+    createFoodMenu(formData).then(() => {
+      setsubmitting(false);
+    });
+  };
+
   let errors = "";
   return (
     <div className="p-6 max-w-2xl">
       <h1 className="text-xl font-semibold mb-6">Upload New Menu</h1>
 
-      <form className="space-y-5">
+      <form className="space-y-5" onSubmit={handleSubmit}>
         <div>
           <label className="block text-sm font-medium mb-1">Name</label>
           <input
@@ -63,24 +103,16 @@ const CreateMenu = () => {
         <div>
           <label className="block text-sm font-medium mb-1">Images</label>
           <div
-          // onDragOver={(e) => {
-          //   e.preventDefault();
-          //   setDragging(true);
-          // }}
-          // onDragLeave={() => setDragging(false)}
-          // onDrop={handleDrop}
-          // onClick={() => document.getElementById("fileInput").click()}
-          // className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
-          //   dragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
-          // }`}
+            onClick={() => document.getElementById("fileInput").click()}
+            className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors border-gray-300"
           >
             <input
               id="fileInput"
               type="file"
-              accept="image/*"
+              accept="image/png, image/jpeg"
               multiple
               hidden
-              //   onChange={(e) => addFiles(e.target.files)}
+              onChange={(e) => addFiles(e.target.files)}
             />
             <p className="text-sm text-gray-500">
               Drag & drop images here, or click to browse
@@ -90,7 +122,7 @@ const CreateMenu = () => {
             <p className="text-red-600 text-xs mt-1">{errors.images}</p>
           )}
 
-          {/* {previews.length > 0 && (
+          {previews.length > 0 && (
             <div className="grid grid-cols-4 gap-3 mt-3">
               {previews.map((src, i) => (
                 <div key={src} className="relative group">
@@ -101,7 +133,7 @@ const CreateMenu = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => removeImage(i)}
+                    // onClick={() => removeImage(i)}
                     className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 text-xs opacity-0 group-hover:opacity-100"
                   >
                     ×
@@ -109,15 +141,15 @@ const CreateMenu = () => {
                 </div>
               ))}
             </div>
-          )} */}
+          )}
         </div>
 
         <button
           type="submit"
-          //   disabled={submitting}
+          disabled={submitting}
           className="px-5 py-2 bg-blue-600 text-white rounded-md text-sm disabled:opacity-50"
         >
-          {/* {submitting ? "Uploading..." : "Create Menu Item"} */}
+         {submitting ? "Uploading ....":" Create Menu Item"}
         </button>
       </form>
     </div>
