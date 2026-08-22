@@ -56,6 +56,16 @@ const AppRouter = () => {
                   </>
                 }
               />
+              <Route
+                path="create-menu/:id"
+                element={
+                  <>
+                    <Header />
+                    <CreateMenu />
+                    <Footer />
+                  </>
+                }
+              />
             </Route>
           </Route>
         </Routes>

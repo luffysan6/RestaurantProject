@@ -40,6 +40,18 @@ const FoodStore = create((set) => ({
       console.error("Error :", error);
     }
   },
+  getOnefood: async (id) => {
+    try {
+      const { data } = await axios.get(`/food/getone/${id}`);
+
+      // console.log(data)
+      if (data.success) {
+        return data.data;
+      }
+    } catch (error) {
+      console.error("Error :", error);
+    }
+  },
 }));
 
 export default FoodStore;

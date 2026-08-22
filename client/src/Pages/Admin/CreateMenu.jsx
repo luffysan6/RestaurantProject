@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FoodStore from "../../store/FoodStore";
+import { useParams } from "react-router";
 
 const CreateMenu = () => {
+  const { id } = useParams();
   const [form, setform] = useState({});
   const [images, setImage] = useState([]);
   const [previews, setpreview] = useState([]);
   const [submitting, setsubmitting] = useState(false);
-  const { createFoodMenu } = FoodStore();
+  const [mode, setmode] = useState(true);
+  const { createFoodMenu, getOnefood } = FoodStore();
   const handleChange = (e) => {
     setform({
       ...form,
@@ -33,7 +36,11 @@ const CreateMenu = () => {
     let formData = new FormData();
 
     Object.entries(form).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (key == "price") {
+        formData.append(key, value);
+      } else {
+        formData.append(key, String(value).toLowerCase());
+      }
     });
     formData.append("isavaiable", true);
     formData.append("foodImage", images);
@@ -41,10 +48,31 @@ const CreateMenu = () => {
 
     createFoodMenu(formData).then(() => {
       setsubmitting(false);
+      setform({ name: "", description: "", price: 0, category: "" });
+      setpreview([]);
+      setImage([]);
     });
   };
 
   let errors = "";
+  useEffect(() => {
+    console.log(id);
+    if (id == undefined) {
+      console.log("you are in create mode");
+    } else {
+      setmode(false);
+      console.log("you are in update mode");
+      getOnefood(id).then((value) => {
+        console.log("this is value", value);
+        setform({
+          name: value.name,
+          description: value.description,
+          category: value.category,
+          price: value.price,
+        });
+      });
+    }
+  }, []);
   return (
     <div className="p-6 max-w-2xl">
       <h1 className="text-xl font-semibold mb-6">Upload New Menu</h1>
@@ -144,13 +172,24 @@ const CreateMenu = () => {
           )}
         </div>
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="px-5 py-2 bg-blue-600 text-white rounded-md text-sm disabled:opacity-50"
-        >
-         {submitting ? "Uploading ....":" Create Menu Item"}
-        </button>
+        {mode && (
+          <button
+            type="submit"
+            disabled={submitting}
+            className="px-5 py-2 bg-blue-600 text-white rounded-md text-sm disabled:opacity-50"
+          >
+            {submitting ? "Uploading ...." : " Create Menu Item"}
+          </button>
+        )}
+        {!mode && (
+          <button
+            type="submit"
+            disabled={submitting}
+            className="px-5 py-2 bg-blue-600 text-white rounded-md text-sm disabled:opacity-50"
+          >
+            {submitting ? "Uploading ...." : " Update Menu"}
+          </button>
+        )}
       </form>
     </div>
   );

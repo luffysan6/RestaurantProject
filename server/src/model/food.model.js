@@ -23,12 +23,12 @@ const foodSchema = new mongoose.Schema({
   description: {
     type: String,
     maxLength: 500,
-    minLength: 100,
+    minLength: 0,
     required: true,
   },
 
   // image ko store karne ke liye cloud storage
-  // cloudinary - asset magment cloud option   
+  // cloudinary - asset magment cloud option
   images: {
     type: [String],
   },
