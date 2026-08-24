@@ -9,7 +9,7 @@ const CreateMenu = () => {
   const [previews, setpreview] = useState([]);
   const [submitting, setsubmitting] = useState(false);
   const [mode, setmode] = useState(true);
-  const { createFoodMenu, getOnefood } = FoodStore();
+  const { createFoodMenu, getOnefood, updateFoodMenu } = FoodStore();
   const handleChange = (e) => {
     setform({
       ...form,
@@ -26,8 +26,22 @@ const CreateMenu = () => {
       previewArray.push(URL.createObjectURL(image));
     }
     setpreview(previewArray);
+    // console.log(typeof filesArray);
+    let imageArr = [];
+    for (let image of filesArray) {
+      imageArr.push(URL.createObjectURL(image));
+    }
+    setImage(imageArr);
+  };
 
-    setImage(filesArray);
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    setsubmitting(true);
+    updateFoodMenu({ ...form, ["id"]: id }).then(() => {
+      setsubmitting(false);
+      setform({});
+    });
   };
 
   const handleSubmit = (e) => {
@@ -43,7 +57,12 @@ const CreateMenu = () => {
       }
     });
     formData.append("isavaiable", true);
-    formData.append("foodImage", images);
+    // formData.append("foodImage", images);
+    // 👇 Append every image separately
+    // console.log(type of images);
+    images.forEach((image) => {
+      formData.append("foodImage", image);
+    });
     console.log(formData);
 
     createFoodMenu(formData).then(() => {
@@ -75,9 +94,11 @@ const CreateMenu = () => {
   }, []);
   return (
     <div className="p-6 max-w-2xl">
-      <h1 className="text-xl font-semibold mb-6">Upload New Menu</h1>
+      <h1 className="text-xl font-semibold mb-6">
+        {mode ? "Upload New Menu" : "Update Menu"}
+      </h1>
 
-      <form className="space-y-5" onSubmit={handleSubmit}>
+      <form className="space-y-5" onSubmit={mode ? handleSubmit : handleUpdate}>
         <div>
           <label className="block text-sm font-medium mb-1">Name</label>
           <input
@@ -187,7 +208,7 @@ const CreateMenu = () => {
             disabled={submitting}
             className="px-5 py-2 bg-blue-600 text-white rounded-md text-sm disabled:opacity-50"
           >
-            {submitting ? "Uploading ...." : " Update Menu"}
+            {submitting ? "Updatinng ...." : " Update Menu"}
           </button>
         )}
       </form>

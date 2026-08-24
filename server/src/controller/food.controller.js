@@ -10,7 +10,7 @@ export const CreateFood = async (req, res) => {
     const { name, description, category, price, isavaiable } = req.body;
     const file = req.files; // multer.array() then req.files else multer.single then req.file
 
-    console.log(file);
+    console.log("image file", file);
     // validating Data
     if (!name || !description || !category || !price || !isavaiable) {
       return res.status(400).json({
@@ -28,6 +28,7 @@ export const CreateFood = async (req, res) => {
       ),
     );
 
+    console.log("Image Url ", result);
     const newFood = new Food();
     newFood.name = name;
     newFood.description = description;

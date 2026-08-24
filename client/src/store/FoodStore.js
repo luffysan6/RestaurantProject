@@ -52,6 +52,28 @@ const FoodStore = create((set) => ({
       console.error("Error :", error);
     }
   },
+  updateFoodMenu: async (formData) => {
+    try {
+      const updatedData = {
+        name: formData.name,
+        price: formData.price,
+        description: formData.description,
+        category: formData.category,
+      };
+
+      console.log(updatedData, formData);
+      const { data } = await axios.post(
+        `/food/updateFoodData/${formData.id}`,
+        updatedData,
+      );
+
+      if (data.success) {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error :", error);
+    }
+  },
 }));
 
 export default FoodStore;
