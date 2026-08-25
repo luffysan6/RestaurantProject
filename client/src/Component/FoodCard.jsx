@@ -1,6 +1,6 @@
 import { ShoppingCart } from "lucide-react";
 
-export default function FoodCard({ food }) {
+export default function FoodCard({ food, onClick }) {
   return (
     <div className="w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
       {/* Image */}
@@ -47,6 +47,7 @@ export default function FoodCard({ food }) {
 
           <button
             disabled={!food.isavaiable}
+            onClick={onClick}
             className="flex items-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-300"
           >
             <ShoppingCart size={17} />

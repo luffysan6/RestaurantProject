@@ -27,11 +27,9 @@ const CreateMenu = () => {
     }
     setpreview(previewArray);
     // console.log(typeof filesArray);
-    let imageArr = [];
-    for (let image of filesArray) {
-      imageArr.push(URL.createObjectURL(image));
-    }
-    setImage(imageArr);
+    // let imageArr = [];
+    const files = Array.from(filesArray);
+    setImage(files);
   };
 
   const handleUpdate = (e) => {
