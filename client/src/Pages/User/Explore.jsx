@@ -16,7 +16,7 @@ const Explore = () => {
         {foodData.map((obj) => (
           <FoodCard
             onClick={() => {
-              addToCart({ obj });
+              addToCart(obj);
             }}
             food={obj}
           />

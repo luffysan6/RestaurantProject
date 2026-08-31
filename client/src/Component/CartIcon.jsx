@@ -1,6 +1,8 @@
 import { ShoppingCartIcon } from "lucide-react";
+import OrderStore from "../store/OrderStore";
 
 const CartIcon = () => {
+  const { cartCount } = OrderStore();
   return (
     <>
       <ShoppingCartIcon
@@ -8,7 +10,7 @@ const CartIcon = () => {
         color="#ffffff"
       />
       <p className="bg-red-600 text-white rounded-full px-2 py-1 fixed text-2xl bottom-38 right-6 z-50 ">
-        3
+        {cartCount}
       </p>
     </>
   );

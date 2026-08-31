@@ -12,6 +12,8 @@ import ExploreAdmin from "./Pages/Admin/Explore.jsx";
 import GuestRoute from "./Component/GuestRoute.jsx";
 import RoleRouter from "./Component/RoleRouter.jsx";
 import CreateMenu from "./Pages/Admin/CreateMenu.jsx";
+import UserDashboard from "./Pages/User/Dashboard.jsx";
+import Cart from "./Pages/User/Cart.jsx";
 const AppRouter = () => {
   return (
     <>
@@ -25,7 +27,7 @@ const AppRouter = () => {
 
           {/* <Route path="/explore" element={<Explore />} /> */}
           <Route element={<Protector />}>
-            <Route
+            {/* <Route
               path="/dashboard"
               element={
                 <>
@@ -34,7 +36,11 @@ const AppRouter = () => {
                   <Footer />
                 </>
               }
-            />
+            /> */}
+            <Route path="/dashboard" element={<UserDashboard />}>
+              <Route index element={<Explore />} />
+              <Route path="cart" element={<Cart />} />
+            </Route>
             <Route path="/admin" element={<RoleRouter />}>
               <Route
                 path="explore"

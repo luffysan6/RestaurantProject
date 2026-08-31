@@ -89,7 +89,7 @@ export default function Header() {
             </NavLink>
 
             <NavLink
-              to="/cart"
+              to="/dashboard/cart"
               className={({ isActive }) =>
                 `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
               }

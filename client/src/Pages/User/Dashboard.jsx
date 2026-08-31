@@ -1,10 +1,12 @@
-import Explore from "./Explore";
-
+import { Outlet } from "react-router";
+import Header from "../../Component/Header";
+import Footer from "../../Component/Footer";
 const Dashboard = () => {
   return (
     <div>
-      <Explore />
-      
+      <Header />
+      <Outlet />
+      <Footer />
     </div>
   );
 };
