@@ -1,5 +1,5 @@
 // Create , Update , Delete ,Read , Read All
-// Admin - Create , Read , Update , Delete
+// Admin - Cre  ate , Read , Update , Delete
 // User - Read
 
 import fileUploader from "../config/fileUploader.js";

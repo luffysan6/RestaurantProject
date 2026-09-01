@@ -11,6 +11,7 @@ import AuthRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
 import cors from "cors";
+import OrderRouter from "./routes/order.route.js";
 // Server Variables
 const app = express();
 const PORT = 3000;
@@ -28,6 +29,7 @@ app.use(IndexRouter);
 app.use("/auth", AuthRouter);
 app.use("/user", UserRouter);
 app.use("/food", FoodRouter);
+app.use("/order", OrderRouter);
 
 app.listen(PORT, async () => {
   await dbConnect();
