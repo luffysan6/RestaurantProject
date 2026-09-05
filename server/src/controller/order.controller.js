@@ -26,15 +26,14 @@ export const CreateOrder = async (req, res) => {
     });
 
     const userData = await verfiyToken(jwt);
-    console.log(userData)
+    console.log(userData);
 
     const newOrder = new OrderModel();
 
     newOrder.totalCartValue = totalCartValue;
-    newOrder.customerId = userData.id,
-    newOrder.CartItem = CartItem,
-    newOrder.status = "pending";
-
+    ((newOrder.customerId = userData.id),
+      (newOrder.CartItem = CartItem),
+      (newOrder.status = "pending"));
 
     await newOrder.save();
 
@@ -51,3 +50,67 @@ export const CreateOrder = async (req, res) => {
       }));
   }
 };
+
+export const getAllOrderAdmin = async (req, res) => {
+  try {
+    const OrderData = await OrderModel.find({})
+      .populate({
+        path: "CartItem.foodId",
+      })
+      .populate({ path: "customerId" });
+
+    return res.status(200).json({
+      success:true,
+      message:"Order Record Fetch  Successfuly",
+      orderData:OrderData,
+    });
+  } catch (error) {
+    
+      console.log("Found Error at Order Creation", error.message)
+      res.status(500).json({
+        message: "Error at Server",
+        success: false,
+      })
+    
+  }
+};
+
+export const UpdateOrderStatus = async (req,res) => {
+    try{
+
+      const {id} = req.params;
+      const {status} = req.body;
+      const statuses =  [
+          "pending",
+          "preparing",
+          "outOfDelivery",
+          "delivered",
+          "cancelled",
+        ]
+        if(!statuses.find(i => i == status)){
+            return res.status(400).json({
+              message:"Bad Request",
+              success:false
+            })
+        }
+
+      const updateOrder = await OrderModel.findByIdAndUpdate(id,{status});
+
+
+      return res.status(200).json({
+        message:"Order Status  Updated",
+        success:true,
+        updatedOrder:updateOrder
+      })
+
+    }
+  catch (error) {
+    
+      console.log("Found Error at Order Creation", error.message)
+      res.status(500).json({
+        message: "Error at Server",
+        success: false,
+      })
+    
+  } 
+}

@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 const OrderSchema = mongoose.Schema(
   {
-    totalCartValue: Number,
+    totalCartValue: {
+      type: Number,
+      required: true,
+    },
     CartItem: [
       {
         foodId: {
@@ -27,11 +30,11 @@ const OrderSchema = mongoose.Schema(
         default: "pending",
         require: true,
       },
-      customerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
-        require:true
-      },
+    },
+    customerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
     },
   },
   {

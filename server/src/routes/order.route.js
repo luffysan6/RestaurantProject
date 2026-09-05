@@ -1,14 +1,18 @@
-import {Router} from 'express'
-import { CreateOrder } from '../controller/order.controller.js';
+import { Router } from "express";
+import {
+  CreateOrder,
+  getAllOrderAdmin,
+  UpdateOrderStatus,
+} from "../controller/order.controller.js";
 
 const router = Router();
 
 // create order
 
-router.post("/create",CreateOrder)
+router.post("/create", CreateOrder);
 
+router.post("/chageStatus/:id", UpdateOrderStatus);
+router.get("/getAllOrderAdmin", getAllOrderAdmin);
+// update order status
 
-// update order status 
-
-
-export default router
+export default router;
