@@ -14,6 +14,8 @@ import RoleRouter from "./Component/RoleRouter.jsx";
 import CreateMenu from "./Pages/Admin/CreateMenu.jsx";
 import UserDashboard from "./Pages/User/Dashboard.jsx";
 import Cart from "./Pages/User/Cart.jsx";
+import OrderHistory from "./Component/OrderHistory.jsx";
+import Orders from "./Pages/User/Orders.jsx";
 const AppRouter = () => {
   return (
     <>
@@ -40,6 +42,7 @@ const AppRouter = () => {
             <Route path="/dashboard" element={<UserDashboard />}>
               <Route index element={<Explore />} />
               <Route path="cart" element={<Cart />} />
+              <Route path="order-history" element={<Orders />} />
             </Route>
             <Route path="/admin" element={<RoleRouter />}>
               <Route

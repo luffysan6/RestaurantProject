@@ -1,8 +1,9 @@
 import { create } from "zustand";
-
+import axios from "../libs/axios";
 const OrderStore = create((set, get) => ({
   CartItemData: [],
   cartCount: 0,
+  orderData: [],
   addToCart: (food) => {
     set((state) => {
       let existingItem = state.CartItemData.find(
@@ -35,42 +36,66 @@ const OrderStore = create((set, get) => ({
       };
     });
   },
- removeToCart: (id) => {
-  set((state) => {
-    const existingData = state.CartItemData.find(
-      (item) => item._id === id
-    );
+  removeToCart: (id) => {
+    set((state) => {
+      const existingData = state.CartItemData.find((item) => item._id === id);
 
-    if (!existingData) {
-      return state;
-    }
+      if (!existingData) {
+        return state;
+      }
 
-    if (existingData.quantity <= 1) {
+      if (existingData.quantity <= 1) {
+        return {
+          cartCount: state.cartCount - 1,
+          CartItemData: state.CartItemData.filter((item) => item._id !== id),
+        };
+      }
+
       return {
         cartCount: state.cartCount - 1,
-        CartItemData: state.CartItemData.filter(
-          (item) => item._id !== id
-        ),
+
+        CartItemData: state.CartItemData.map((item) => {
+          if (item._id === id) {
+            return {
+              ...item,
+              quantity: item.quantity - 1,
+            };
+          }
+
+          return item;
+        }),
       };
+    });
+  },
+  CreateOrder: async () => {
+    try {
+      let orderData = get().CartItemData;
+      const { data } = await axios.post("/order/create", {
+        OrderData: orderData,
+      });
+
+      if (data.success) {
+        alert("Order created Successfully");
+        set({ CartItemData: [] });
+      }
+    } catch (err) {
+      console.log("Got an Error", err);
+      alert("Error");
     }
+  },
+  fetchUserOrder: async () => {
+    try {
+      const { data } = await axios.get("/order/getAllOrderUser");
 
-    return {
-      cartCount: state.cartCount - 1,
-
-      CartItemData: state.CartItemData.map((item) => {
-        if (item._id === id) {
-          return {
-            ...item,
-            quantity: item.quantity - 1,
-          };
-        }
-
-        return item;
-      }),
-    };
-  });
-},
-  CreateOrder: () => {},
+      if (data.success) {
+        // alert("Order Fetch Successfully");
+        set({ orderData: data.orderData });
+      }
+    } catch (err) {
+      console.log("Got an Error", err);
+      alert("Error");
+    }
+  },
 }));
 
 export default OrderStore;

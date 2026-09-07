@@ -3,7 +3,13 @@ import { Plus, Minus } from "lucide-react";
 import OrderStore from "../../store/OrderStore";
 
 const Cart = () => {
-  const { CartItemData: cart, addToCart, removeToCart } = OrderStore();
+  const {
+    CartItemData: cart,
+    addToCart,
+    removeToCart,
+    cartCount,
+    CreateOrder,
+  } = OrderStore();
   //   const [cart, setCart] = useState([
   //     {
   //       _id: "6a7091f0a5f0a0c183e6c1b3",
@@ -79,6 +85,16 @@ const Cart = () => {
           </div>
         ))}
       </div>
+      {cartCount > 0 ? (
+        <button
+          onClick={() => CreateOrder()}
+          className="bg-black px-8 border-rouned-full text-2xl text-white py-2 "
+        >
+          Create Order
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

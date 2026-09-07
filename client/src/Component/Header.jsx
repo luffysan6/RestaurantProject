@@ -71,7 +71,7 @@ export default function Header() {
           {/* Navigation */}
           <nav className="flex items-center gap-6">
             <NavLink
-              to="/"
+              to="/dashboard"
               className={({ isActive }) =>
                 `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
               }
@@ -80,12 +80,12 @@ export default function Header() {
             </NavLink>
 
             <NavLink
-              to="/menu"
+              to="/dashboard/order-history"
               className={({ isActive }) =>
                 `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
               }
             >
-              Menu
+              Order History
             </NavLink>
 
             <NavLink

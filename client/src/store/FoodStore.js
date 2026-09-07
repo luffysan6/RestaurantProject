@@ -27,6 +27,7 @@ const FoodStore = create((set) => ({
       console.error("Error :", error);
     }
   },
+  
 
   createFoodMenu: async (foodData) => {
     try {
