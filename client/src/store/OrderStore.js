@@ -96,6 +96,34 @@ const OrderStore = create((set, get) => ({
       alert("Error");
     }
   },
+  fetchAdminOrder: async () => {
+    try {
+      const { data } = await axios.get("order/getAllOrderAdmin");
+
+      if (data.success) {
+        set({ orderData: data.orderData });
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  },
+  OrderStatusChange:async (orderid, OrderStatus) => {
+        try {
+
+          const {data} = await axios.post(`order/chageStatus/${orderid}`,{
+            status:OrderStatus
+          })
+
+          if(data.success){
+            alert(data.message);
+           await get().fetchAdminOrder();
+          }
+
+        } catch (error) {
+            console.log("Error",error)
+        }
+  }
 }));
 
 export default OrderStore;

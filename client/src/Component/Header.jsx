@@ -20,7 +20,7 @@ export default function Header() {
           {/* Navigation */}
           <nav className="flex items-center gap-6">
             <NavLink
-              to="/"
+              to="/admin/order-history"
               className={({ isActive }) =>
                 `font-medium ${isActive ? "text-orange-500" : "text-gray-600"}`
               }

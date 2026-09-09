@@ -10,10 +10,15 @@ import multer from "../libs/multer.cjs";
 
 const router = Router();
 
-router.post("/create", multer.array("foodImage"), CreateFood);
-router.post("/updateFoodData/:id", updateFoodData);
-router.get("/getAllFoods", readAllData);
-router.get("/getone/:id", GetOne);
-router.delete("/deleteOne/:id", DeleteOne);
+router.post(
+  "/create",
+  multer.array("foodImage"),
+  roleMiddleware("admin"),
+  CreateFood,
+);
+router.post("/updateFoodData/:id", roleMiddleware("admin"), updateFoodData);
+router.get("/getAllFoods", roleMiddleware("admin", "user"), readAllData);
+router.get("/getone/:id", roleMiddleware("admin", "user"), GetOne);
+router.delete("/deleteOne/:id", roleMiddleware("admin"), DeleteOne);
 
 export default router;

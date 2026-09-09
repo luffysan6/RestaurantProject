@@ -14,15 +14,15 @@ import RoleRouter from "./Component/RoleRouter.jsx";
 import CreateMenu from "./Pages/Admin/CreateMenu.jsx";
 import UserDashboard from "./Pages/User/Dashboard.jsx";
 import Cart from "./Pages/User/Cart.jsx";
-import OrderHistory from "./Component/OrderHistory.jsx";
 import Orders from "./Pages/User/Orders.jsx";
+import OrdersPage from "./Pages/Admin/OrderPage.jsx";
 const AppRouter = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
           <Route element={<GuestRoute />}>
+            <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/signin" element={<Login />} />
           </Route>
@@ -71,6 +71,16 @@ const AppRouter = () => {
                   <>
                     <Header />
                     <CreateMenu />
+                    <Footer />
+                  </>
+                }
+              />
+              <Route
+                path="order-history"
+                element={
+                  <>
+                    <Header />
+                    <OrdersPage />
                     <Footer />
                   </>
                 }
