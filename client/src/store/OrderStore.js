@@ -29,7 +29,7 @@ const OrderStore = create((set, get) => ({
             _id: food._id,
             name: food.name,
             price: food.price,
-            image: food.image,
+            image: food.images[0],
             quantity: 1,
           },
         ],
@@ -108,22 +108,20 @@ const OrderStore = create((set, get) => ({
       console.log("error", error);
     }
   },
-  OrderStatusChange:async (orderid, OrderStatus) => {
-        try {
+  OrderStatusChange: async (orderid, OrderStatus) => {
+    try {
+      const { data } = await axios.post(`order/chageStatus/${orderid}`, {
+        status: OrderStatus,
+      });
 
-          const {data} = await axios.post(`order/chageStatus/${orderid}`,{
-            status:OrderStatus
-          })
-
-          if(data.success){
-            alert(data.message);
-           await get().fetchAdminOrder();
-          }
-
-        } catch (error) {
-            console.log("Error",error)
-        }
-  }
+      if (data.success) {
+        alert(data.message);
+        await get().fetchAdminOrder();
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  },
 }));
 
 export default OrderStore;

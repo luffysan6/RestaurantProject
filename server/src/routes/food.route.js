@@ -7,6 +7,7 @@ import {
   DeleteOne,
 } from "../controller/food.controller.js";
 import multer from "../libs/multer.cjs";
+import roleMiddleware from "../libs/roleMiddleware.js";
 
 const router = Router();
 

@@ -4,8 +4,8 @@ import express from "express"; // type module  export
 
 import IndexRouter from "./routes/index.route.js";
 import dbConnect from "./config/db.js";
-import FoodRouter from './routes/food.route.js'
-import TodoRouter from "./routes/todo.route.js";
+import FoodRouter from "./routes/food.route.js";
+import path from "path";
 import UserRouter from "./routes/user.route.js";
 import AuthRouter from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
@@ -14,7 +14,12 @@ import cors from "cors";
 import OrderRouter from "./routes/order.route.js";
 // Server Variables
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //App use  Files
 app.use(
@@ -25,11 +30,17 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
-app.use(IndexRouter);
+// app.use(IndexRouter);
 app.use("/auth", AuthRouter);
 app.use("/user", UserRouter);
 app.use("/food", FoodRouter);
 app.use("/order", OrderRouter);
+// Static frontend
+app.use(express.static(path.join(__dirname, "../../", "client/dist")));
+
+app.get("/{*splat}", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../", "client/dist", "index.html"));
+});
 
 app.listen(PORT, async () => {
   await dbConnect();
