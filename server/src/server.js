@@ -14,9 +14,9 @@ import cors from "cors";
 import OrderRouter from "./routes/order.route.js";
 // Server Variables
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 import { fileURLToPath } from "url";
+import env from "./config/env.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
 //App use  Files
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: env.APP_URL,
     credentials: true,
   }),
 );
@@ -42,7 +42,7 @@ app.get("/{*splat}", (req, res) => {
   res.sendFile(path.join(__dirname, "../../", "client/dist", "index.html"));
 });
 
-app.listen(PORT, async () => {
+app.listen(env.PORT, async () => {
   await dbConnect();
-  console.log(`Server is Running at http://localhost:${PORT}`);
+  console.log(`Server is Running at http://localhost:${env.PORT}`);
 });
